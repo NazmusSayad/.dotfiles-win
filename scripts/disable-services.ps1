@@ -49,7 +49,7 @@ $servicesToDisable = @(
   'dmwappushservice',
   'MicrosoftEdge*',
   'CDPUserSvc*',
-  'OneSyncSvc_*',
+  'OneSyncSvc_*'
 )
 
 # Array of services to set to manual
