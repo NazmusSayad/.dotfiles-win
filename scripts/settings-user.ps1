@@ -155,3 +155,6 @@ reg.exe add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\CTF\LangBar" /v ShowStatus /t 
 # WINDOWS 10 TASKBAR CUSTOMIZATIONS
 # Makes Taskbar Small in Windows 10
 reg.exe add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarSmallIcons" /t REG_DWORD /d 1 /f
+
+# Enable Print Screen Key to Open Snipping Tool
+reg.exe add "HKEY_CURRENT_USER\SOFTWARE\Control Panel\Keyboard" /v PrintScreenKeyForSnippingEnabled /t REG_DWORD /d 1 /f

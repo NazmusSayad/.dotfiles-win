@@ -7,6 +7,10 @@ $featuresToDisable = @(
 )
 
 Get-WindowsOptionalFeature -Online |
-Where-Object {
-  $_.FeatureName -in $featuresToDisable
-} | Disable-WindowsOptionalFeature -Online -Remove -NoRestart
+ForEach-Object {
+  $featureName = $_.FeatureName
+  if ($featuresToDisable | Where-Object { $featureName -Like $_ }) {
+    Write-Output "Removing $featureName..."
+    Disable-WindowsOptionalFeature -Online -FeatureName $featureName -NoRestart
+  }
+}

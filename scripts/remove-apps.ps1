@@ -1,5 +1,11 @@
 Write-Output 'Removing Windows Apps...'
 
+$appxPackagesToRemove = @(
+  'Microsoft.Wallet',
+  'Microsoft.Windows.DevHome',
+  'Microsoft.StorePurchaseApp'
+)
+
 $packagesToRemove = @(
   'Microsoft.Microsoft3DViewer',
   'Microsoft.BingSearch',
@@ -7,11 +13,6 @@ $packagesToRemove = @(
   'Clipchamp.Clipchamp',
   'Microsoft.WindowsAlarms',
   'Microsoft.549981C3F5F10',
-  'Microsoft.Windows.DevHome',
-  'Microsoft.Windows.DevHome.Preview',
-  'Microsoft.Windows.DevHome.InternalPreview',
-  'Microsoft.Windows.DevHome.Alpha',
-  'Microsoft.Windows.DevHome.Experiment'
   'MicrosoftCorporationII.MicrosoftFamily',
   'Microsoft.WindowsFeedbackHub',
   'Microsoft.GetHelp', 
@@ -36,35 +37,34 @@ $packagesToRemove = @(
   'Microsoft.WindowsSoundRecorder',
   'Microsoft.BingWeather',
   'Microsoft.ZuneMusic',
-  'Microsoft.Xbox.TCUI',
-  'Microsoft.XboxApp',
-  'Microsoft.XboxGameOverlay',
-  'Microsoft.XboxGamingOverlay',
-  'Microsoft.XboxIdentityProvider',
-  'Microsoft.XboxSpeechToTextOverlay',
+  'Microsoft.Xbox*',
   'Microsoft.GamingApp',
   'Microsoft.YourPhone',
-  'Microsoft.MicrosoftEdge',
-  'Microsoft.MicrosoftEdge.Stable',
-  'Microsoft.MicrosoftEdge_8wekyb3d8bbwe',
-  'Microsoft.MicrosoftEdgeDevToolsClient_8wekyb3d8bbwe',
-  'Microsoft.MicrosoftEdgeDevToolsClient_1000.19041.1023.0_neutral_neutral_8wekyb3d8bbwe',
-  'Microsoft.MicrosoftEdge_44.19041.1266.0_neutral__8wekyb3d8bbwe',
+  'Microsoft.MicrosoftEdge*',
   'Microsoft.OneDrive',
-  'Microsoft.MicrosoftEdgeDevToolsClient',
   'Microsoft.549981C3F5F10',
   'Microsoft.MixedReality.Portal',
   'Microsoft.Windows.Ai.Copilot.Provider',
   'Microsoft.WindowsMeetNow',
-  'Microsoft.WindowsStore'
+  'Microsoft.WindowsStore' 
 )
 
-Get-AppxProvisionedPackage -Online | 
+$packagesToRemove += $appxPackagesToRemove
+
+Get-AppxProvisionedPackage -Online |
 ForEach-Object {
-  if ($_.DisplayName -in $packagesToRemove) {
+  $packageName = $_.DisplayName
+  if ($packagesToRemove | Where-Object { $packageName -Like $_ }) {
+    Write-Output "Removing $packageName..."
     Remove-AppxProvisionedPackage -AllUsers -Online -PackageName $_.PackageName
   }
 }
 
-
-Get-AppxPackage *devhome* | Remove-AppxPackage
+Get-AppxPackage |
+ForEach-Object {
+  $packageName = $_.Name
+  if ($appxPackagesToRemove | Where-Object { $packageName -Like $_ }) {
+    Write-Output "Removing $packageName..."
+    Remove-AppxPackage -Package $_.PackageFullName
+  }
+}

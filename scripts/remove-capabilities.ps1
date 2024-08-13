@@ -12,7 +12,11 @@ $capabilitiesToRemove = @(
   'Microsoft.Windows.WordPad'
 )
 
-Get-WindowsCapability -Online | 
-Where-Object {
-    ($_.Name -split '~')[0] -in $capabilitiesToRemove
-} | Remove-WindowsCapability -Online
+Get-WindowsCapability -Online |
+ForEach-Object {
+  $capabilityName = $_.Name
+  if ($capabilitiesToRemove | Where-Object { $capabilityName -Like $_ }) {
+    Write-Output "Removing $capabilityName..."
+    Remove-WindowsCapability -Online -Name $capabilityName
+  }
+}
