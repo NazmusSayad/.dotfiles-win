@@ -1,9 +1,5 @@
 Write-Output 'Setting Windows Settings...'
 
-# Enable the Ultimate Performance power plan
-powercfg.exe -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-powercfg.exe -setactive e9a42b02-d5df-448d-aa00-03f14749eb61
-
 # Removes OneDrive
 Remove-Item "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk" -ErrorAction Continue
 Remove-Item "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.exe" -ErrorAction Continue
