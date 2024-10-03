@@ -46,7 +46,9 @@ $packagesToRemove = @(
   'Microsoft.MixedReality.Portal',
   'Microsoft.Windows.Ai.Copilot.Provider',
   'Microsoft.WindowsMeetNow',
-  'Microsoft.WindowsStore' 
+  'Microsoft.WindowsStore',
+  'Microsoft.ScreenSketch',
+  'Microsoft.SnippingTool'
 )
 
 $packagesToRemove += $appxPackagesToRemove
