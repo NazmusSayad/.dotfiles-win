@@ -48,7 +48,14 @@ $packagesToRemove = @(
   'Microsoft.WindowsMeetNow',
   'Microsoft.WindowsStore',
   'Microsoft.ScreenSketch',
-  'Microsoft.SnippingTool'
+  'Microsoft.SnippingTool',
+  'Microsoft.XboxGameCallableUI',
+  'Microsoft.Windows.NarratorQuickStart',
+  'Microsoft.Windows.PeopleExperienceHost',
+  'Microsoft.Windows.ParentalControls',
+  'Microsoft.Windows.CloudExperienceHost',
+  'Microsoft.MicrosoftEdgeDevToolsClient'
+  'AppUp.IntelGraphicsExperience'
 )
 
 $packagesToRemove += $appxPackagesToRemove
