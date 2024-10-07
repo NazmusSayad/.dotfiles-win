@@ -12,5 +12,6 @@ cd /d "%~dp0"
 echo Running with administrator privileges.
 node ./src/msys2.mjs
 
-echo Press any key to exit...
+echo Press any key to restart your PC...
 pause >nul
+shutdown /r /t 0
