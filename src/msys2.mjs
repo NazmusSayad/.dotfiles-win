@@ -1,8 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { spawnSync, execSync } from 'child_process'
-const REG_PATH =
-  'HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment'
+import { addToPath, writeEnv } from './env.mjs'
+
 const MSYS_PATH = path.resolve('C:\\msys64')
 const NSSWITCH_CONFIG_PATH = path.resolve(MSYS_PATH, 'etc/nsswitch.conf')
 const MSYS_INIS_PATH = [
@@ -24,36 +23,6 @@ const MSYS_BINS = [
   'clangarm64/bin',
 ]
 
-function addToSystemEnv(name, value) {
-  return spawnSync(`reg add "${REG_PATH}" /v ${name} /d "${value}" /f`, {
-    shell: true,
-    stdio: 'inherit',
-  })
-}
-
-function addToSystemEnvPath(...paths) {
-  const systemPath = getSystemPathStr()
-  const newPaths = [
-    ...new Set([
-      ...systemPath.split(';').filter((p) => !paths.includes(p)),
-      ...paths,
-    ]),
-  ]
-
-  return addToSystemEnv('PATH', newPaths.join(';'))
-}
-
-function getSystemPathStr() {
-  const systemPath = execSync(`reg query "${REG_PATH}" /v PATH`, {
-    encoding: 'utf-8',
-  })
-  return systemPath
-    .split('\n')
-    .filter((line) => line.includes('PATH'))[0]
-    .split('    ')[3]
-    .trim()
-}
-
 for (const ini of MSYS_INIS_PATH) {
   const iniPath = path.resolve(MSYS_PATH, ini)
   const iniContent = fs.readFileSync(iniPath, 'utf-8')
@@ -74,5 +43,5 @@ fs.writeFileSync(
 )
 console.log('Updated: nsswitch.conf')
 
-addToSystemEnvPath(...MSYS_BINS.map((bin) => path.join(MSYS_PATH, bin)))
-addToSystemEnv('MSYS2_PATH_TYPE', 'inherit')
+writeEnv('MSYS2_PATH_TYPE', 'inherit', 'Machine')
+addToPath('Machine', ...MSYS_BINS.map((bin) => path.join(MSYS_PATH, bin)))
