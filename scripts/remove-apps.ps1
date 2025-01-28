@@ -3,13 +3,28 @@ Write-Output 'Removing Windows Apps...'
 $appxPackagesToRemove = @(
   'Microsoft.Wallet',
   'Microsoft.Windows.DevHome',
-  'Microsoft.StorePurchaseApp'
+  'Microsoft.StorePurchaseApp',
+  'Microsoft.BioEnrollment',
+  'Microsoft.Windows.CloudExperienceHost',
+  'Microsoft.Windows.ContentDeliveryManager',
+  'Microsoft.Windows.PeopleExperienceHost',
+  'Microsoft.Windows.OOBENetworkCaptivePortal',
+  'Microsoft.Windows.OOBENetworkConnectionFlow',
+  'Microsoft.Windows.CapturePicker',
+  'Microsoft.Windows.SecureAssessmentBrowser',
+  'Microsoft.MicrosoftEdgeDevToolsClient',
+  'Microsoft.Windows.XGpuEjectDialog',
+  'Microsoft.XboxGameCallableUI',
+  'NcsiUwpApp'
 )
 
 $packagesToRemove = @(
   'Microsoft.Microsoft3DViewer',
   'Microsoft.BingSearch',
   'Microsoft.WindowsCamera',
+  'Microsoft.Windows.Photos',
+  'Microsoft.WindowsCalculator',
+  'Microsoft.Windows.DevHome',
   'Clipchamp.Clipchamp',
   'Microsoft.WindowsAlarms',
   'Microsoft.549981C3F5F10',
@@ -54,7 +69,7 @@ $packagesToRemove = @(
   'Microsoft.Windows.PeopleExperienceHost',
   'Microsoft.Windows.ParentalControls',
   'Microsoft.Windows.CloudExperienceHost',
-  'Microsoft.MicrosoftEdgeDevToolsClient'
+  'Microsoft.MicrosoftEdgeDevToolsClient',
   'AppUp.IntelGraphicsExperience'
 )
 
