@@ -25,6 +25,12 @@ const MSYS_BINS = [
 
 for (const ini of MSYS_INIS_PATH) {
   const iniPath = path.resolve(MSYS_PATH, ini)
+  const isExist = fs.existsSync(iniPath)
+  if (!isExist) {
+    console.log(`File not found: ${iniPath}`)
+    continue
+  }
+
   const iniContent = fs.readFileSync(iniPath, 'utf-8')
   fs.writeFileSync(
     iniPath,
@@ -44,4 +50,9 @@ fs.writeFileSync(
 console.log('Updated: nsswitch.conf')
 
 writeEnv('MSYS2_PATH_TYPE', 'inherit', 'Machine')
-addToPath('Machine', ...MSYS_BINS.map((bin) => path.join(MSYS_PATH, bin)))
+addToPath(
+  'Machine',
+  ...MSYS_BINS.map((bin) => path.join(MSYS_PATH, bin)).filter(
+    (bin) => fs.existsSync(bin) && fs.statSync(bin).isDirectory()
+  )
+)
